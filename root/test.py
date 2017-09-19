@@ -5,7 +5,7 @@ from Reader.ReaderDecorator.WifiDecorator import WifiDecorator
 from Reader.ReaderDecorator.BluetoothStateDecorator import BluetoothStateDecorator
 from Reader.ReaderDecorator.MobileConnStateDecorator import MobileConnStateDecorator
 
-filePath = '00f1221ebf94129c8d4643d1542ebd4c1fabf9d5.csv'
+filePath = 'in.csv'
 count = 0
 reader = ReaderConcret ()
 reader = BateryDecorator (reader, filePath ,count)

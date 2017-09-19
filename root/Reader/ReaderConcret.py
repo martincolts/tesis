@@ -1,4 +1,5 @@
 from Reader import Reader
+import datetime
 
 class ReaderConcret(Reader):
 
@@ -8,6 +9,19 @@ class ReaderConcret(Reader):
 
     def read (self, row ):
         self.rowList = []
-        self.rowList.append(row[0])
-        self.rowList.append(row[2])
+        dateFormat = self.getDateFormatted(row[2])
+        self.rowList.append(int(dateFormat.weekday())+1)
+        self.rowList.append(dateFormat.hour)
+        self.rowList.append(dateFormat.minute)
         return self.rowList
+
+    def getDateFormatted (self , date):
+        year = int(date.split('-')[0])
+        month = int(date.split('-')[1])
+        day = int(date.split('-')[2].split('T')[0])
+        time = date.split('T')[1]
+        hour = int(time.split(':')[0])
+        min = int(time.split(':')[1])
+        dateFormat = datetime.datetime(year, month , day , hour , min)
+        return dateFormat
+
