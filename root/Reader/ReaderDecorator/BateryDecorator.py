@@ -1,9 +1,19 @@
 from ReaderDecoratorAbs import ReaderDecoratorAbs
+import csv
 class BateryDecorator(ReaderDecoratorAbs):
 
-    def __init__(self , reader):
+    def __init__(self , reader , filePath , count):
+        count = 0
+        with open(filePath, 'rb')as inFile:
+            readFile = csv.reader(inFile, delimiter=';', quotechar='|')
+            for row in readFile:
+                count=count+1
+                if "power" in row[3]:
+                    if "level" in row[3]:
+                        if row[4] != '0':
+                            self.bateryLevel=row[4]
+                            break
         ReaderDecoratorAbs.__init__(self , reader)
-        self.bateryLevel = 0
 
     def read(self , row ):
         list = self.reader.read(row)
