@@ -5,6 +5,9 @@ class ReaderConcret(Reader):
 
     def __init__ (self):
         Reader.__init__(self)
+        self.firstRow.append ("day_of_week")
+        self.firstRow.append("hour")
+        self.firstRow.append("min")
         pass
 
     def read (self, row ):

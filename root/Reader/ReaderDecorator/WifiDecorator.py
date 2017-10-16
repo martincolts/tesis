@@ -2,8 +2,11 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class WifiDecorator(ReaderDecoratorAbs):
 
     def __init__(self , reader):
+        list = reader.get_firstRow()
+        list.append("wifi")
         ReaderDecoratorAbs.__init__(self , reader)
         self.wifiStatus = 0
+
 
     def read(self , row ):
         list = self.reader.read(row)

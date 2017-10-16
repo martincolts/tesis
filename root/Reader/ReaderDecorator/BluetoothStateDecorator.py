@@ -2,8 +2,9 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class BluetoothStateDecorator(ReaderDecoratorAbs):
 
     def __init__(self , reader):
-        ReaderDecoratorAbs.__init__(self , reader)
+        reader.get_firstRow().append("bluetooth")
         self.bluetoothStatus = 0
+        ReaderDecoratorAbs.__init__(self , reader)
 
     def read(self , row ):
         list = self.reader.read(row)
@@ -15,3 +16,4 @@ class BluetoothStateDecorator(ReaderDecoratorAbs):
                     self.bluetoothStatus = 0
         list.append(self.bluetoothStatus)
         return list
+
