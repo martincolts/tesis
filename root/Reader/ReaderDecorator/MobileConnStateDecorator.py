@@ -2,8 +2,10 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class MobileConnStateDecorator(ReaderDecoratorAbs):
 
     def __init__(self , reader):
-        ReaderDecoratorAbs.__init__(self , reader)
         self.mobileState = 0
+        reader.get_firstRow().append("data")
+        ReaderDecoratorAbs.__init__(self , reader)
+
 
     def read(self , row ):
         list = self.reader.read(row)

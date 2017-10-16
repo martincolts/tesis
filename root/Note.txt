@@ -1,0 +1,2 @@
+Arma (el mas clasico), series de tiempo
+Redes neuronales recurrentes.

@@ -3,6 +3,7 @@ import csv
 class BateryDecorator(ReaderDecoratorAbs):
 
     def __init__(self , reader , filePath , count):
+        reader.firstRow.append("battery")
         count = 0
         with open(filePath, 'rb')as inFile:
             readFile = csv.reader(inFile, delimiter=';', quotechar='|')
