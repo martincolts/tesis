@@ -4,7 +4,7 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class ScreenPowerDecorator(ReaderDecoratorAbs):
     def __init__(self, reader):
         self.screenPower = 0
-        reader.get_firstRow().append("screen_on_off")
+        reader.get_firstRow().append("screen_on")
         ReaderDecoratorAbs.__init__(self, reader)
 
     def read(self, row):

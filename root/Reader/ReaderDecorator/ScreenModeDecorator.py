@@ -4,7 +4,7 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class ScreenModeDecorator(ReaderDecoratorAbs):
     def __init__(self, reader):
         self.screenMode = 0
-        reader.get_firstRow().append("screen_mode")
+        reader.get_firstRow().append("screen_automatic_mode")
         ReaderDecoratorAbs.__init__(self, reader)
 
     def read(self, row):

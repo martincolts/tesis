@@ -38,7 +38,7 @@ reader = NotificationVolumeDecorator(reader)
 reader = RingermodeDecorator(reader)# normal=0, silent=1, vibrate=2
 reader = BatteryTempDecorator(reader)
 reader = BatteryVoltageDecorator(reader)
-reader = BatteryChargerDecorator(reader)# disconnected=0, ac=1, usb=2
+reader = BatteryChargerDecorator(reader)
 reader = ScreenBrightnessDecorator(reader)
 reader = ScreenModeDecorator(reader)# manual=0, automatic=1
 reader = ScreenPowerDecorator(reader)# off=0, on=1
