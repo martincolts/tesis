@@ -19,8 +19,10 @@ from Reader.ReaderDecorator.BatteryChargerDecorator import BatteryChargerDecorat
 from Reader.ReaderDecorator.ScreenBrightnessDecorator import ScreenBrightnessDecorator
 from Reader.ReaderDecorator.ScreenModeDecorator import ScreenModeDecorator
 from Reader.ReaderDecorator.ScreenPowerDecorator import ScreenPowerDecorator
+from Reader.ReaderDecorator.CPUDecorator import CPUDecorator
+from Reader.ReaderDecorator.MemoryFreeDecorator import MemoryFreeDecorator
 
-filePath = 'in.csv'
+filePath = '27afc0fa204fc3c8ff22e44f77a9e3baa3556bf2.csv'
 count = 0
 reader = ReaderConcret()
 reader = BateryDecorator(reader, filePath, count)
@@ -42,21 +44,36 @@ reader = BatteryChargerDecorator(reader)
 reader = ScreenBrightnessDecorator(reader)
 reader = ScreenModeDecorator(reader)# manual=0, automatic=1
 reader = ScreenPowerDecorator(reader)# off=0, on=1
+reader = CPUDecorator(reader)
+reader = MemoryFreeDecorator(reader)
 
 with open(filePath, 'rb')as inFile:
     with open('result.csv', 'wb') as outFile:
         readFile = csv.reader(inFile, delimiter=';', quotechar='|')
         writeFile = csv.writer(outFile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writeFile.writerow(reader.get_firstRow())
+        index =0
         for row in readFile:
-            if count < readFile.line_num:
-                writeFile.writerow(reader.read(row))
+            index = index+1
+            line = reader.read(row)
+            if index%200 == 0:
+                if count < readFile.line_num:
+                    writeFile.writerow(line)
 
-import fileinput
+#import fileinput
 
-seen = set()  # set for fast O(1) amortized lookup
-for line in fileinput.FileInput('result.csv', inplace=1):
-    if line in seen: continue  # skip duplicate
+#seen = set()  # set for fast O(1) amortized lookup
+#for line in fileinput.FileInput('result.csv', inplace=1):
+#    if any(line) in seen: continue  # skip duplicate
 
-    seen.add(line)
-    print (line)  # standard output is now redirected to the file
+#    seen.add(line)
+#    print line  # standard output is now redirected to the file
+
+#input = open('result.csv', 'rb')
+#output = open('result2.csv', 'wb')
+#writer = csv.writer(output)
+#for row in csv.reader(input):
+#    if any(row):
+#        writer.writerow(row)
+#input.close()
+#output.close()
