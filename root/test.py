@@ -22,7 +22,7 @@ from Reader.ReaderDecorator.ScreenPowerDecorator import ScreenPowerDecorator
 from Reader.ReaderDecorator.CPUDecorator import CPUDecorator
 from Reader.ReaderDecorator.MemoryFreeDecorator import MemoryFreeDecorator
 
-filePath = '27afc0fa204fc3c8ff22e44f77a9e3baa3556bf2.csv'
+filePath = 'in.csv'
 count = 0
 reader = ReaderConcret()
 reader = BateryDecorator(reader, filePath, count)
@@ -47,18 +47,52 @@ reader = ScreenPowerDecorator(reader)# off=0, on=1
 reader = CPUDecorator(reader)
 reader = MemoryFreeDecorator(reader)
 
+saveType = "3PerHour"
+
 with open(filePath, 'rb')as inFile:
     with open('result.csv', 'wb') as outFile:
         readFile = csv.reader(inFile, delimiter=';', quotechar='|')
         writeFile = csv.writer(outFile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writeFile.writerow(reader.get_firstRow())
-        index =0
-        for row in readFile:
-            index = index+1
-            line = reader.read(row)
-            if index%200 == 0:
-                if count < readFile.line_num:
+        hour = 0
+        min20 = 0
+        min40 = 0
+        min00 = 0
+        if saveType == "24PerDay":
+            for row in readFile:
+                line = reader.read(row)
+                if line[7]!=hour:
+                    hour = line[7]
                     writeFile.writerow(line)
+        elif saveType == "3PerHour":
+            for row in readFile:
+                line = reader.read(row)
+                if line[7] == hour:
+                    if min20 == 0:
+                        if line[8]>=15 and line[8]<=25:
+                            min20=1
+                            writeFile.writerow(line)
+                    if min40 == 0:
+                        if line[8]>=35 and line[8]<=45:
+                            min40=1
+                            writeFile.writerow(line)
+                    if min00 == 0:
+                        if line[8]>=50 and line[8]<=59:
+                            min00=1
+                            writeFile.writerow(line)
+                else:
+                    hour = line[7]
+                    min00=0
+                    min20=0
+                    min40=0
+        else:
+            index =0
+            for row in readFile:
+                index = index+1
+                line = reader.read(row)
+                if index%200 == 0:
+                    if count < readFile.line_num:
+                        writeFile.writerow(line)
 
 #import fileinput
 
