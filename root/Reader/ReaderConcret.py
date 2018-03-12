@@ -83,12 +83,19 @@ class ReaderConcret(Reader):
         return self.rowList
 
     def getDateFormatted (self , date):
-        year = int(date.split('-')[0])
-        month = int(date.split('-')[1])
-        day = int(date.split('-')[2].split('T')[0])
-        time = date.split('T')[1]
-        hour = int(time.split(':')[0])
-        min = int(time.split(':')[1])
+        try:
+            year = int(date.split('-')[0])
+            month = int(date.split('-')[1])
+            day = int(date.split('-')[2].split('T')[0])
+            time = date.split('T')[1]
+            hour = int(time.split(':')[0])
+            min = int(time.split(':')[1])
+        except ValueError:
+            year=1900
+            month=1
+            day=1
+            hour=1
+            min=1
         dateFormat = datetime.datetime(year, month , day , hour , min)
         return dateFormat
 

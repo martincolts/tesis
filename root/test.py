@@ -22,7 +22,7 @@ from Reader.ReaderDecorator.ScreenPowerDecorator import ScreenPowerDecorator
 from Reader.ReaderDecorator.CPUDecorator import CPUDecorator
 from Reader.ReaderDecorator.MemoryFreeDecorator import MemoryFreeDecorator
 
-filePath = 'in.csv'
+filePath = '0269e21475ac65ad57fbec9c83ab4960ec66581b.csv'
 count = 0
 reader = ReaderConcret()
 reader = BateryDecorator(reader, filePath, count)
@@ -47,10 +47,11 @@ reader = ScreenPowerDecorator(reader)# off=0, on=1
 reader = CPUDecorator(reader)
 reader = MemoryFreeDecorator(reader)
 
-saveType = "3PerHour"
+saveType = "24PerDay"
+import sys
 
 with open(filePath, 'rb')as inFile:
-    with open('result.csv', 'wb') as outFile:
+    with open('file2_24PerDay.csv', 'wb') as outFile:
         readFile = csv.reader(inFile, delimiter=';', quotechar='|')
         writeFile = csv.writer(outFile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writeFile.writerow(reader.get_firstRow())
@@ -59,11 +60,15 @@ with open(filePath, 'rb')as inFile:
         min40 = 0
         min00 = 0
         if saveType == "24PerDay":
+            index=0
             for row in readFile:
+                index=index+1
                 line = reader.read(row)
                 if line[7]!=hour:
                     hour = line[7]
                     writeFile.writerow(line)
+                sys.stdout.write("Progress: %d%%   \r" % (index*100/170204505) )
+                sys.stdout.flush()
         elif saveType == "3PerHour":
             for row in readFile:
                 line = reader.read(row)
@@ -90,9 +95,11 @@ with open(filePath, 'rb')as inFile:
             for row in readFile:
                 index = index+1
                 line = reader.read(row)
-                if index%200 == 0:
+                if index%25 == 0:
                     if count < readFile.line_num:
                         writeFile.writerow(line)
+                sys.stdout.write("Progress: %d%%   \r" % (index/12121) )
+                sys.stdout.flush()
 
 #import fileinput
 
