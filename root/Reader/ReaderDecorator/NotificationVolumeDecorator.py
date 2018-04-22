@@ -4,7 +4,7 @@ from ReaderDecoratorAbs import ReaderDecoratorAbs
 class NotificationVolumeDecorator(ReaderDecoratorAbs):
     def __init__(self, reader):
         self.notificationVolume = 0
-        reader.get_firstRow().append("dtmf_volumen")
+        reader.get_firstRow().append("notificadion_volumen")
         ReaderDecoratorAbs.__init__(self, reader)
 
     def read(self, row):

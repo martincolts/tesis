@@ -22,7 +22,7 @@ from Reader.ReaderDecorator.ScreenPowerDecorator import ScreenPowerDecorator
 from Reader.ReaderDecorator.CPUDecorator import CPUDecorator
 from Reader.ReaderDecorator.MemoryFreeDecorator import MemoryFreeDecorator
 
-filePath = '0269e21475ac65ad57fbec9c83ab4960ec66581b.csv'
+filePath = '13eeb035a106213a28702d779d0c7fb777850e67.csv'
 count = 0
 reader = ReaderConcret()
 reader = BateryDecorator(reader, filePath, count)
@@ -47,13 +47,13 @@ reader = ScreenPowerDecorator(reader)  # off=0, on=1
 reader = CPUDecorator(reader)
 reader = MemoryFreeDecorator(reader)
 
-saveType = "25"
+saveType = "3PerHour"
 import sys
 
 index = 0
 
 with open(filePath, 'rb')as inFile:
-    with open('file2_25.csv', 'wb') as outFile:
+    with open('file4_3PerHour.csv', 'wb') as outFile:
         readFile = csv.reader(inFile, delimiter=';', quotechar='|')
         writeFile = csv.writer(outFile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         writeFile.writerow(reader.get_firstRow())
@@ -68,13 +68,13 @@ with open(filePath, 'rb')as inFile:
                 if line[7] != hour:
                     hour = line[7]
                     writeFile.writerow(line)
-                sys.stdout.write("Progress: %d%%   \r" % (index * 100 / 170204505))
+                sys.stdout.write("Progress: %d%%   \r" % (index * 100 / 253752242))
                 sys.stdout.flush()
         elif saveType == "3PerHour":
             for row in readFile:
                 line = reader.read(row)
                 index = index + 1
-                sys.stdout.write("Progress: %d%%   \r" % (index * 100 / 170204505))
+                sys.stdout.write("Progress: %d%%   \r" % (index * 100 / 253752242))
                 sys.stdout.flush()
                 if line[7] == hour:
                     if min20 == 0:
@@ -102,7 +102,7 @@ with open(filePath, 'rb')as inFile:
                 if index % 25 == 0:
                     if count < readFile.line_num:
                         writeFile.writerow(line)
-                sys.stdout.write("Progress: %d%%   \r" % (index / 170204505))
+                sys.stdout.write("Progress: %d%%   \r" % (index *100 / 253752242))
                 sys.stdout.flush()
 
 # import fileinput
